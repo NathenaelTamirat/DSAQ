@@ -1,0 +1,37 @@
+Problem 13: Online Exam Submission Platform
+
+Problem Description
+
+Simulate the backend for a coding competition platform (like LeetCode contest mode). Thousands of students submit solutions simultaneously as the deadline approaches.
+
+The System Rules
+
+Submission Flow:
+Submissions arrive with timestamp and execution_time_estimate.
+Deadline: Any submission after T_DEADLINE is rejected immediately.
+Grading Queue:
+The system has limited grading servers.
+To improve "user satisfaction", Shortest Jobs (low execution estimate) are graded first so more students get results faster.
+Fairness Cap:
+If a submission has waited > 5 minutes, it ignores the Shortest Job rule and jumps to the front (Starvation prevention).
+Must Use Data Structures
+
+Min-Heap: Primary queue for Shortest Job First.
+FIFO Queue: For the "Starvation / High Priority" lane.
+(Logic: The grader checks the FIFO Queue first, then the Heap).
+Operations to Implement (CLI Commands)
+
+SET_DEADLINE <timestamp>
+SUBMIT <student> <est_time> <timestamp>
+PROCESS: Simulate one grader cycle.
+STATUS: Show queues.
+Sample Execution
+
+> SET_DEADLINE 100
+> SUBMIT S1 500 10 (Long job)
+> SUBMIT S2 10 11 (Short job)
+> PROCESS
+> Grading S2 (Shortest)
+
+> SUBMIT S3 5 101
+> Error: Rejected. Past Deadline.
