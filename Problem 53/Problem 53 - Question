@@ -1,0 +1,42 @@
+# Problem 53: The High-Stakes Auctioneer
+
+## Problem Description
+
+In a live auction, the "Current Highest Bid" is the only thing that matters. However, if a bidder is disqualified or retracts their bid, the price reverts to the _previous_ highest bid.
+
+### The System Rules
+
+1.  **Bidding**: New bid must be strictly `>` current max.
+2.  **Retraction**: The current winner pulls out.
+3.  **Reversion**: The state rolls back to exactly what it was before that bid.
+
+## Must Use Data Structures
+
+- **Stack**: Stores `Bid` objects. The Top is always the current Winner.
+- (Variables like "CurrentMax" are insufficient because we need the _sequence_ of maxes).
+
+## Operations to Implement (CLI Commands)
+
+- `BID <user> <amount>`
+- `WITHDRAW`: Undo last bid.
+- `CURRENT`: Show winner.
+
+## Sample Execution
+
+```text
+> BID A 100
+Current: A (100)
+Stack: [100]
+
+> BID B 90
+Error: Too low.
+
+> BID C 150
+Current: C (150)
+Stack: [100, 150]
+
+> WITHDRAW
+C retracted.
+Reverted to A (100).
+Stack: [100]
+```
