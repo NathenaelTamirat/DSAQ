@@ -1,37 +1,57 @@
-Problem 13: Online Exam Submission Platform
+Problem 46: Immutable Ledger (Simple Blockchain)
 
 Problem Description
 
-Simulate the backend for a coding competition platform (like LeetCode contest mode). Thousands of students submit solutions simultaneously as the deadline approaches.
+You are implementing a simplified blockchain ledger that maintains an append-only chain of blocks with integrity verification.
 
 The System Rules
 
-Submission Flow:
-Submissions arrive with timestamp and execution_time_estimate.
-Deadline: Any submission after T_DEADLINE is rejected immediately.
-Grading Queue:
-The system has limited grading servers.
-To improve "user satisfaction", Shortest Jobs (low execution estimate) are graded first so more students get results faster.
-Fairness Cap:
-If a submission has waited > 5 minutes, it ignores the Shortest Job rule and jumps to the front (Starvation prevention).
+Block Properties:
+Block ID (sequential)
+Data (transaction or message)
+Timestamp
+Previous Hash (link to prior block)
+Current Hash (computed from data + previous hash)
+Chain Rules:
+Genesis Block: The first block has Previous Hash = 0.
+Append Only: Blocks can only be added to the end.
+Integrity: If any block's data is modified, the chain becomes invalid.
+Hash Computation (Simplified):
+Hash = (Sum of ASCII values of Data + Previous Hash) mod 1000000007
+Validation:
+Traverse the chain and verify each block's hash matches the recomputed value.
 Must Use Data Structures
 
-Min-Heap: Primary queue for Shortest Job First.
-FIFO Queue: For the "Starvation / High Priority" lane.
-(Logic: The grader checks the FIFO Queue first, then the Heap).
+Singly Linked List: The blockchain itself.
+Stack: For reverse traversal during validation (or simply traverse backward if using doubly linked).
+Array: For storing a "snapshot" of valid hashes for quick comparison.
 Operations to Implement (CLI Commands)
 
-SET_DEADLINE <timestamp>
-SUBMIT <student> <est_time> <timestamp>
-PROCESS: Simulate one grader cycle.
-STATUS: Show queues.
+ADD_BLOCK <data>: Append a new block.
+VIEW_CHAIN: Print all blocks with hashes.
+VALIDATE: Check chain integrity, report any tampered blocks.
+TAMPER <block_id> <new_data>: (For testing) Modify a block's data.
 Sample Execution
 
-> SET_DEADLINE 100
-> SUBMIT S1 500 10 (Long job)
-> SUBMIT S2 10 11 (Short job)
-> PROCESS
-> Grading S2 (Shortest)
+> ADD_BLOCK "Alice pays Bob 50"
+Block 1 added. Hash: 567834.
 
-> SUBMIT S3 5 101
-> Error: Rejected. Past Deadline.
+> ADD_BLOCK "Bob pays Carol 30"
+Block 2 added. Hash: 891234.
+
+> ADD_BLOCK "Carol pays Dave 20"
+Block 3 added. Hash: 345678.
+
+> VIEW_CHAIN
+[Genesis] <- Block 1 (Hash: 567834) <- Block 2 (Hash: 891234) <- Block 3 (Hash: 345678)
+
+> VALIDATE
+Chain is VALID.
+
+> TAMPER 2 "Bob pays Carol 3000"
+Block 2 data changed (for testing).
+
+> VALIDATE
+Chain is INVALID!
+- Block 2: Expected hash 891234, Computed 999888. TAMPERED!
+- Block 3: Previous hash mismatch. BROKEN CHAIN!
