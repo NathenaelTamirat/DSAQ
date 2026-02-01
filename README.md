@@ -112,7 +112,7 @@ javac 'Problem 53/HighStakesAuctioneer.java' && java -cp 'Problem 53' HighStakes
 
 - When following the recommended flow above, start in the repository root after cloning (`cd DSAQ`) and run the exact blocks shown for each problem.
 - If your shell interprets spaces differently, the `cd 'Problem 13'` style ensures folder names with spaces are handled correctly.
-- If you want me to add example input sequences for any program, tell me which problem and I'll append sample sessions.
+-the solutions strictly solve the question asked 
 
 ---
 
