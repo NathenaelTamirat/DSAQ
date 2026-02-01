@@ -1,0 +1,23 @@
+### Simple Explanation of the Problem
+
+This problem is about building a simple program that acts like an auction system where people place bids, but only higher ones count, and if the top bidder backs out, it goes back to the previous top bid. Think of it like a game where players shout higher numbers to win a prize, and the program keeps track of the history using a stack (like a pile of cards where you add or remove from the top). If someone withdraws, you just remove the top card and reveal the one below. The program runs in a command-line style, letting you add bids, withdraw the latest one, or check who's winning right now. It ensures bids are always increasing and shows errors if not. The stack helps remember the order of bids so you can easily undo.
+
+### Pseudo Code Explanation
+
+It creates a static inner class called Bid, which is a simple holder for each bid with a user's name (string) and the bid amount (integer). The constructor sets these two fields.
+
+It sets up a static Stack (like a pile) to hold Bid objects, starting empty.
+
+In the main method, it creates a Scanner to read input from the console; enters a loop while there's more input: reads a line, trims extra spaces, skips if empty; splits the line into parts based on spaces; takes the first part as the command and uses a switch to handle it.
+
+For "BID", it grabs the user from the second part and amount from the third (turns it into an integer); checks if the stack isn't empty and if the new amount is less than or equal to the top bid's amount—if so, prints "Error: Too low." and skips; otherwise, pushes a new Bid onto the stack; prints "Current: [user] ([amount])"; calls printStack to show the current stack.
+
+For "WITHDRAW", checks if the stack is empty—if so, prints "Error: No bids to withdraw." and skips; otherwise, pops the top Bid off the stack and saves it; prints "[user] retracted."; if the stack isn't empty now, peeks at the new top and prints "Reverted to [user] ([amount])."; else prints "No active bids."; then calls printStack.
+
+For "CURRENT", checks if stack is empty—if so, prints "No active bids."; else peeks at the top Bid and prints "Current: [user] ([amount])".
+
+For any other command, prints "Unknown command.".
+
+After all input, closes the scanner.
+
+It defines a static printStack method; prints "Stack: ["; loops through the stack from bottom to top using get(i), printing each bid's amount, with a comma and space if not the last; then prints "]" and a new line.

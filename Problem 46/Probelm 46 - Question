@@ -1,38 +1,42 @@
-Problem 46: Immutable Ledger (Simple Blockchain)
+# Problem 46: Immutable Ledger (Simple Blockchain)
 
-Problem Description
+## Problem Description
 
 You are implementing a simplified blockchain ledger that maintains an append-only chain of blocks with integrity verification.
 
-The System Rules
+### The System Rules
 
-Block Properties:
-Block ID (sequential)
-Data (transaction or message)
-Timestamp
-Previous Hash (link to prior block)
-Current Hash (computed from data + previous hash)
-Chain Rules:
-Genesis Block: The first block has Previous Hash = 0.
-Append Only: Blocks can only be added to the end.
-Integrity: If any block's data is modified, the chain becomes invalid.
-Hash Computation (Simplified):
-Hash = (Sum of ASCII values of Data + Previous Hash) mod 1000000007
-Validation:
-Traverse the chain and verify each block's hash matches the recomputed value.
-Must Use Data Structures
+1.  **Block Properties**:
+    - `Block ID` (sequential)
+    - `Data` (transaction or message)
+    - `Timestamp`
+    - `Previous Hash` (link to prior block)
+    - `Current Hash` (computed from data + previous hash)
+2.  **Chain Rules**:
+    - **Genesis Block**: The first block has `Previous Hash = 0`.
+    - **Append Only**: Blocks can only be added to the end.
+    - **Integrity**: If any block's data is modified, the chain becomes invalid.
+3.  **Hash Computation** (Simplified):
+    - `Hash = (Sum of ASCII values of Data + Previous Hash) mod 1000000007`
+4.  **Validation**:
+    - Traverse the chain and verify each block's hash matches the recomputed value.
 
-Singly Linked List: The blockchain itself.
-Stack: For reverse traversal during validation (or simply traverse backward if using doubly linked).
-Array: For storing a "snapshot" of valid hashes for quick comparison.
-Operations to Implement (CLI Commands)
+## Must Use Data Structures
 
-ADD_BLOCK <data>: Append a new block.
-VIEW_CHAIN: Print all blocks with hashes.
-VALIDATE: Check chain integrity, report any tampered blocks.
-TAMPER <block_id> <new_data>: (For testing) Modify a block's data.
-Sample Execution
+- **Singly Linked List**: The blockchain itself.
+- **Stack**: For reverse traversal during validation (or simply traverse backward if using doubly linked).
+- **Array**: For storing a "snapshot" of valid hashes for quick comparison.
 
+## Operations to Implement (CLI Commands)
+
+- `ADD_BLOCK <data>`: Append a new block.
+- `VIEW_CHAIN`: Print all blocks with hashes.
+- `VALIDATE`: Check chain integrity, report any tampered blocks.
+- `TAMPER <block_id> <new_data>`: (For testing) Modify a block's data.
+
+## Sample Execution
+
+```text
 > ADD_BLOCK "Alice pays Bob 50"
 Block 1 added. Hash: 567834.
 
@@ -55,3 +59,4 @@ Block 2 data changed (for testing).
 Chain is INVALID!
 - Block 2: Expected hash 891234, Computed 999888. TAMPERED!
 - Block 3: Previous hash mismatch. BROKEN CHAIN!
+

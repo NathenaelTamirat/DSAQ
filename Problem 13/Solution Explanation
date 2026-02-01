@@ -1,0 +1,30 @@
+For the problem the program we provided solves in this way...
+First, It creates a static inner class called Submission to hold details for each student's submission, including the student's name, estimated execution time, and submission timestamp.
+
+Then, in the main method, it sets up a scanner to read user input from the console, initializes variables for the deadline (starting at 0), current simulated time (starting at 0), and a constant threshold of 5 for starvation detection.
+
+It creates a min-heap (using PriorityQueue) to store submissions prioritized by shortest estimated execution time first.
+
+It creates a FIFO queue (using LinkedList) to store starved submissions that need priority grading.
+
+It prints a welcome message indicating the system is ready and lists available commands.
+
+It enters an infinite loop to handle user inputs, prompting with "> " each time.
+
+Inside the loop, it checks if there's input available, reads a line, trims whitespace, and skips if empty.
+
+It splits the input line into parts (command and arguments).
+
+It uses a switch statement based on the command:
+
+- For "SET_DEADLINE", if there's at least one argument, it tries to parse the timestamp as a long and sets the deadline, printing confirmation; otherwise, it prints an error for invalid input or format.
+
+- For "SUBMIT", if there are at least three arguments, it parses the student name, estimated time, and timestamp; updates current time to the maximum of current time or this submission's timestamp; checks if the timestamp is after deadline and rejects with an error if so; otherwise, adds the new Submission to the min-heap and prints acceptance message; catches and prints errors for invalid numbers.
+
+- For "PROCESS", it creates temporary lists to hold all submissions from the heap and starved ones; polls everything from the heap, checking each: if current time minus submission time exceeds threshold, adds to starved list; else adds to temp list. It then adds back the temp list to the heap. It sorts the starved list by submission time (oldest first) and adds them to the FIFO queue. It then tries to get a submission to grade: first from FIFO if not empty (with "(Priority)" reason), else from heap if not empty (with "(Shortest)" reason). If a submission is found, it prints "Grading [student] [reason]", then advances current time by adding the estimated time; if no submissions, prints "No submissions to process."
+
+- For "STATUS", it prints "FIFO: " followed by student names from the FIFO queue in order; then prints "Heap: " followed by student names from a copied and sorted (by estimated time) list of the heap's contents.
+
+- For any other command, it prints "Unknown command".
+
+After the loop (on end of input), it closes the scanner and prints "Program terminated."
