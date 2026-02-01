@@ -59,4 +59,4 @@ Block 2 data changed (for testing).
 Chain is INVALID!
 - Block 2: Expected hash 891234, Computed 999888. TAMPERED!
 - Block 3: Previous hash mismatch. BROKEN CHAIN!
-```
+
